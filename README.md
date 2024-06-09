@@ -6,10 +6,7 @@ SmartEdu Plant Watering adalah sebuah proyek embedded system yang dirancang untu
 - [Perangkat Keras yang Dibutuhkan](#perangkat-keras-yang-dibutuhkan)
 - [Pemasangan](#pemasangan)
 - [Penggunaan](#penggunaan)
-- [Lisensi](#lisensi)
-- [Kontribusi](#kontribusi)
-- [Kontak](#kontak)
-
+  
 ## Fitur
 
 - **Pemantauan Kelembaban Tanah:** Mengukur tingkat kelembaban tanah dan menampilkan hasilnya pada LCD dan OLED display.
