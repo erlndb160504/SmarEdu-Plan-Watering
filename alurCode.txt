@@ -1,0 +1,51 @@
+
+This code is written in Arduino IDE for an ESP32 development board and implements a smart plant watering system with audio and visual feedback. Here's a breakdown of how it works:
+
+Initialization (setup() function):
+
+	1. Includes libraries: The code includes libraries for LCD display, MP3 player, software serial communication, and FreeRTOS for multitasking.
+	2. configuration: Defines pins for buttons, LEDs, relay, buzzer, analog input for the moisture sensor, and software serial pins for the MP3 player.
+	3. LCD and OLED initialization: Initializes the LCD display and OLED display.
+	4. MP3 player initialization: Initializes the DFPlayer Mini MP3 player.
+	5. Task creation: Creates two tasks using FreeRTOS: soilMoistureTask and buttonTask.
+	6. soilMoistureTask reads sensor data, controls watering, and plays audio alerts.
+	7. buttonTask handles button presses to turn the watering relay on/off.
+	8. Watchdog timer: Initializes a watchdog timer to automatically reset the ESP32 if it malfunctions.
+
+Main loop tasks:
+
+soilMoistureTask runs continuously:
+
+	1. Reads the moisture sensor value.
+	2. Converts the sensor reading to a moisture percentage.
+	3. Updates the LCD display with the moisture percentage.
+	4. Determines the appropriate action based on the moisture level:
+	5. Very Wet: Plays a pre-recorded track (track 2), displays a sad face on the OLED, turns on a green LED, and restarts the ESP32 after 5 seconds if the condition persists.
+	6. DRY: Plays a pre-recorded track (track 1), displays a sad face on the OLED, and turns on a red LED with a buzzer sound.
+	7. WET (within range): Plays a pre-recorded track (track 1) and turns on a green LED (optional).
+	8. Controls the MP3 player based on the moisture level and last played track.
+	9. Resets the watchdog timer to prevent system crashes.
+	10. Delays for 1 second before repeating the loop.
+
+buttonTask runs continuously:
+
+	1. Reads the button state.
+	2. Turns the watering relay on/off based on the button press (LOW for on, HIGH for off).
+	3. Prints a message to the serial monitor indicating the relay state.
+	4. Delays for 500 milliseconds before repeating the loop.
+
+Helper functions:
+
+	1. warnLedRed(): Blinks a red LED and sounds a buzzer to indicate a dry plant.
+	2. warnLedGreen(): Turns on a green LED (optional) to indicate watering in progress.
+	3. oledSad(): Displays a sad face animation on the OLED screen.
+	4. oledHappy(): Displays a happy face animation on the OLED screen (not used in current logic).
+	5. oledWatering(): Displays a watering animation on the OLED screen (not triggered in current logic but defined in the code).
+
+Overall, this code demonstrates a smart watering system that:
+
+	1. Monitors soil moisture using a sensor.
+	2. Plays audio alerts based on the moisture level.
+	3. Provides visual feedback on the LCD and OLED displays.
+	5. Allows manual control of the watering relay using a button.
+	6. Implements safety measures by restarting the system if the soil is too wet for an extended period.
